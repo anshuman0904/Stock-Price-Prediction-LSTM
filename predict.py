@@ -12,12 +12,10 @@ dataset_test['Close/Last'] = dataset_test['Close/Last'].replace('[\$,]', '', reg
 # Extract the 'Close/Last' column for testing
 testing_set = dataset_test.iloc[:, 1:2].values
 
-# Apply the same MinMaxScaler as used for training data
 sc = MinMaxScaler(feature_range=(0, 1))
 testing_set_scaled = sc.fit_transform(testing_set)
 
-# Prepare X_test similar to X_train (using 60 time steps for each prediction)
-sequence_length = 5  # Assuming you used a sequence length of 60 for training
+sequence_length = 5
 
 X_test = []
 y_test = []
@@ -36,7 +34,6 @@ X_test = np.reshape(X_test, (X_test.shape[0], X_test.shape[1], 1))
 print("X_test shape:", X_test.shape)
 print("y_test shape:", y_test.shape)
 
-# Assuming 'regressor' is your trained LSTM model
 predicted_prices = regressor.predict(X_test)
 
 # Inverse transform the predictions to get original scale
